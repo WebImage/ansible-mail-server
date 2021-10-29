@@ -1,0 +1,25 @@
+---
+- name: Create database
+  mysql_db:
+    name: mailserver
+    state: present
+  register: mailserverdb
+
+- name: Copy SQL file
+  copy:
+    src: mailserver.sql
+    dest: /tmp
+#  when: mailserverdb.changed
+
+- name: Import database structure
+  mysql_db:
+    name: mailserver
+    state: import
+    target: /tmp/mailserver.sql
+#  when: mailserverdb.changed
+
+- name: Create mailserver user
+  mysql_user:
+    priv: "mailserver.*:SELECT"
+    name: mailuser
+    password: m@ilm@nager

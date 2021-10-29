@@ -1,0 +1,6 @@
+---
+- name: Configure mail_location
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-mail.conf
+    regexp: "^mail_location"
+    line: "mail_location = {{ dovecot_mail_location }}"

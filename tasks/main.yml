@@ -1,0 +1,19 @@
+---
+# https://www.linode.com/docs/email/postfix/email-with-postfix-dovecot-and-mariadb-on-centos-7/
+- name: Install mail server packages
+  yum:
+    name:
+      - postfix
+      - dovecot
+      - dovecot-mysql
+    state: present
+
+- include_tasks: postfix.yml
+- include_tasks: dovecot.yml
+- include_tasks: database.yml
+
+- name: Start Dovecot
+  service:
+    name: dovecot
+    state: started
+    enabled: true
